@@ -43,6 +43,7 @@ def getLayout():
         )
 
     ])
+    
 @app.callback(dash.dependencies.Output('live-update-text', 'children'),
               [dash.dependencies.Input('interval-component', 'n_intervals')])
 def updateTable(n):
@@ -51,7 +52,7 @@ def updateTable(n):
     df = pandas.DataFrame(json["data"])
     return generate_table(df)
 
-def generate_table(dataframe, max_rows=10):
+def generate_table(dataframe, max_rows=100):
     return html.Table(
         # Header
         [html.Tr([html.Th(col) for col in dataframe.columns])] +
@@ -80,6 +81,7 @@ def update_output(n_clicks, username, email,address,birthday):
     print(username,email,address,birthday)
     response = requests.post(url,data=dic)
     print(response.json())
+    app.layout = getLayout
     return ""
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 if __name__ == '__main__':
