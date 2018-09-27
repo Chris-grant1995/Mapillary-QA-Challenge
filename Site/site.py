@@ -1,7 +1,7 @@
 import time
 time.sleep(2)
 import requests
-url = "http://api:80/users";
+url = "http://api:80/users"
 from datetime import datetime
 import pandas;
 import dash
@@ -85,4 +85,4 @@ def update_output(n_clicks, username, email,address,birthday):
     return ""
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0',debug=True)
+    app.run_server(host='0.0.0.0',debug=False)

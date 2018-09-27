@@ -15,4 +15,10 @@ services:
       - 8050:8050
     depends_on:
       - api
-
+  tests:
+    build: ./Tests/
+    volumes:
+      - ./Tests/:/usr/src/app
+    depends_on:
+      - site
+      
