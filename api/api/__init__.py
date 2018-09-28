@@ -24,20 +24,6 @@ def teardown_db(exception):
     if db is not None:
         db.close()
 
-@app.route("/")
-def index():
-    """Present some documentation"""
-
-    # Open the README file
-    with open(os.path.dirname(app.root_path) + '/README.md', 'r') as markdown_file:
-
-        # Read the content of the file
-        content = markdown_file.read()
-
-        # Convert to HTML
-        return markdown.markdown(content)
-
-
 class UserList(Resource):
     def get(self):
         shelf = get_db()
