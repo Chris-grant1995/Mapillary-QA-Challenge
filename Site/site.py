@@ -31,7 +31,7 @@ def getLayout():
     html.Div(children=[html.Label("Username"),dcc.Input(id='username', type='text')]),
     html.Div(children=[html.Label("Email"),dcc.Input(id='email', type='text')]),
     html.Div(children=[html.Label("Address"),dcc.Input(id='address', type='text')]),
-    html.Div(children=[html.Label("Birthday"),dcc.Input(id='birthday', type='text')]),
+    html.Div(children=[html.Label("Birthday (MM/DD/YYYY)"),dcc.Input(id='birthday', type='text')]),
     html.Button('Create New Person', id='button'),
     html.Div(id='output-container-button',
             children=''),

@@ -37,6 +37,7 @@ class UserList(Resource):
         return {'message': 'Success', 'data': devices}, 200
 
     def post(self):
+        import re
         parser = reqparse.RequestParser()
 
         parser.add_argument('username', required=True)
@@ -44,8 +45,13 @@ class UserList(Resource):
         parser.add_argument('address', required=True)
         parser.add_argument('birthday', required=True)
 
+       
         # Parse the arguments into an object
         args = parser.parse_args()
+        
+        bdayReg = "^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$"
+        if re.match(bdayReg,args["birthday"] ) == None:
+            return {'message': 'Invalid Birthday' }, 400
 
         shelf = get_db()
         shelf[args['username']] = args

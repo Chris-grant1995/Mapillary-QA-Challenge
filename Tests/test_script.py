@@ -27,7 +27,7 @@ class TestTemplate(unittest.TestCase):
         """Stop web driver"""
         self.driver.quit()
 
-    def test_case_1(self):
+    def test_selenium_success(self):
         """Fill Out Form Completely and Click Submit"""
         try:
             self.driver.get(siteURL)
@@ -52,7 +52,7 @@ class TestTemplate(unittest.TestCase):
         except NoSuchElementException as ex:
             self.driver.save_screenshot("test_1_fail.png")
             self.fail(ex.msg)
-    def test_case_2(self):
+    def test_selenium_success_verify(self):
         """Verify That Results from above test are Present In Table"""
         try:
             self.driver.get(siteURL)
@@ -67,7 +67,7 @@ class TestTemplate(unittest.TestCase):
         except NoSuchElementException as ex:
             self.driver.save_screenshot("test_2_fail.png")
             self.fail(ex.msg)
-    def test_case_3(self):
+    def test_API_POST_success(self):
         """API POST Test: Success"""
         import requests
         data = {
@@ -78,7 +78,7 @@ class TestTemplate(unittest.TestCase):
         }
         response = requests.post(apiURL, json=data)
         self.assertLess(response.status_code, 400)
-    def test_case_4(self):
+    def test_API_POST_success_verify(self):
         """API GET Test: Success"""
         import requests
         data = {
@@ -91,7 +91,7 @@ class TestTemplate(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         l =  response.json()["data"]
         self.assertIn(data,l)
-    def test_case_5(self):
+    def test_API_POST_failure(self):
         """API POST Test: Fail"""
         import requests
         data = {
@@ -101,7 +101,7 @@ class TestTemplate(unittest.TestCase):
         }
         response = requests.post(apiURL, json=data)
         self.assertEqual(response.status_code, 400)
-    def test_case_6(self):
+    def test_API_POST_failure_verify(self):
         """API GET Test: Fail"""
         import requests
         data = {
@@ -114,7 +114,7 @@ class TestTemplate(unittest.TestCase):
         l =  response.json()["data"]
         self.assertNotIn(data,l)
 
-    def test_case_7(self):
+    def test_selenium_failure(self):
         """Fill Out Form Incompletely and Click Submit"""
         try:
             self.driver.get(siteURL)
@@ -136,7 +136,7 @@ class TestTemplate(unittest.TestCase):
         except NoSuchElementException as ex:
             self.driver.save_screenshot("test_7_fail.png")
             self.fail(ex.msg)
-    def test_case_8(self):
+    def test_selenium_failure_verify(self):
         """Verify That Results from above test are Present In Table"""
         try:
             self.driver.get(siteURL)
@@ -151,6 +151,30 @@ class TestTemplate(unittest.TestCase):
         except NoSuchElementException as ex:
             self.driver.save_screenshot("test_8_fail.png")
             self.fail(ex.msg)
+    def test_API_POST_bad_input(self):
+        """API POST Test: Malformed Birthday"""
+        import requests
+        data = {
+            "username": "test9Username",
+            "email": "test9Email@gmail.com",
+            "address": "test9Address",
+            "birthday": "21/342/432532"
+        }
+        response = requests.post(apiURL, json=data)
+        self.assertEqual(response.status_code, 400)
+    def test_API_POST_bad_input_verify(self):
+        """API GET Test: Malformed Birthday"""
+        import requests
+        data = {
+            "username": "test9Username",
+            "email": "test9Email@gmail.com",
+            "address": "test9Address",
+            "birthday": "21/342/432532"
+        }
+        response = requests.get(apiURL)
+        self.assertEqual(response.status_code, 200)
+        l =  response.json()["data"]
+        self.assertNotIn(data,l)
 if __name__ == '__main__':
     time.sleep(2)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestTemplate)
